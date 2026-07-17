@@ -2,11 +2,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
-// Usamos rutas RELATIVAS en producción (`base: './'`) para que la app funcione
-// en cualquier alojamiento sin cambios: GitHub Pages (en subcarpeta), Cloudflare
-// Pages (en la raíz), Netlify, Vercel o incluso abriendo el index.html en local.
-// En desarrollo se sirve en la raíz.
-export default defineConfig(({ command }) => ({
-  base: command === 'build' ? './' : '/',
+// Usamos la base '/elmapadetunegocio/' solo al compilar en GitHub Actions
+// para el despliegue en GitHub Pages (que se sirve en una subcarpeta).
+// En cualquier otro entorno (como Cloudflare Pages o local) usamos '/'
+// para evitar que la página se quede en blanco.
+export default defineConfig(() => ({
+  // @ts-ignore
+  base: process.env.GITHUB_ACTIONS === 'true' ? '/elmapadetunegocio/' : '/',
   plugins: [react()],
 }))
