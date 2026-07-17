@@ -7,7 +7,13 @@ import react from '@vitejs/plugin-react'
 // En cualquier otro entorno (como Cloudflare Pages o local) usamos '/'
 // para evitar que la página se quede en blanco.
 export default defineConfig(() => ({
+  root: 'src',
+  publicDir: '../public',
   // @ts-ignore
   base: process.env.GITHUB_ACTIONS === 'true' ? '/elmapadetunegocio/' : '/',
   plugins: [react()],
+  build: {
+    outDir: '../dist',
+    emptyOutDir: true,
+  }
 }))
